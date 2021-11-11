@@ -1,0 +1,82 @@
+.story{
+    // clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+    &__transform-reversal{
+        transform: skewX(12deg);
+    }
+    position: relative;
+    transform: skewX(-12deg);
+    width: 75%;
+    margin:  0 auto;
+    box-shadow: 0 3rem 6rem rgba($color-black, 0.1);
+    background-color: rgba($color-white,0.5);
+    border-radius: 3px;
+    padding: 6rem;
+    padding-left: 9rem;  //since image box isskewed 3 rems to offset that
+    font-size: 1.6rem;
+
+    
+    @include respond(tab-port){ 
+        width: 100%;
+        padding: 4px;
+        padding-left: 7px;
+    }
+    @include respond(phone){ 
+        transform: skewX(0);
+    }
+
+    &__img{
+        height: 100%; // giving img width and height means img takes width of parent
+        //height is given because img is not square so to foll complete height of box
+        transform: translateX(-4rem) scale(1.4); // scale up now because on hover we need to scale down the image// img isn't centered properly before
+        backface-visibility: hidden; // if any problem happens while delaing with css animations use backface visibility
+        transition: all 0.5s;
+    }
+    
+    &_shape{
+        width: 15rem;
+        background-color: orangered;
+        height: 15rem;
+        float:  left;
+        shape-outside: circle(50% at 50% 50%); 
+        //text is actually floating around circle
+        // this is to create text which starts and finishes like circle starts and finishes of radius 50% at center 50% 50%
+        //in order for this to work, element must actually be floated and element must have dimensions i.e. width and height
+        clip-path: circle(50% at 50% 50%); //to create a circle
+        transform: translateX(-3rem) skewx(12deg); //elements are floated so, to not mess with structure of elements
+        //child elements of stories are selected to reverse skew done differently as 2 transform properties can't be applies at once in css
+        
+        @include respond(phone){ 
+            transform: translateX(-3rem) skewX(0);
+        }
+    }
+    &__text{
+        transform: skewX(12deg );
+        //child elements of stories are selected to reverse skew done differently as 2 transform properties can't be applies at once in css
+
+        @include respond(phone){ 
+            transform:skewX(0);
+        }
+    }
+    &__caption{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 20%);//at first it is below 50% and on hover comes up
+        color: $color-white;
+        text-transform: uppercase;
+        font-size: 1.7rem;
+        text-align: center;
+        opacity: 0;
+        transition: all 0.5s;
+        backface-visibility: hidden;
+        
+    }
+    &:hover &__caption{
+        transform: translate(-50%,-50%); // on hover gets to center
+        opacity: 1;
+    }
+    &:hover &__img{
+        transform: translateX(-4rem) scale(1.05);
+        filter: blur(3px) brightness(80%); // make image darker low brightness blur image blur filter property 
+    }
+}

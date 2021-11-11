@@ -1,0 +1,157 @@
+.navigation{
+    &__checkbox{
+        display: none;//to hide checkbox, we toggle this using our styled label
+    }
+
+    &__button{
+        background-color: $color-white;
+        height: 7rem;  //this is to completely cover background in the beginning
+        width: 7rem;
+        position: fixed;
+        top: 6rem;
+        right: 6rem;
+        border-radius: 50%;
+        z-index: 60;
+        box-shadow: 0 1rem 3rem rgba($color-black, 0.15);
+        text-align: center;  //to center 3 wide toggler
+        cursor: pointer;
+        
+        @include respond(tab-port){
+            top: 4rem;
+            right: 4rem; 
+        }   
+        @include respond(phone){
+            top: 3rem;
+            right: 3rem; 
+        }
+    }
+    &__background{
+        // background is at first behind the 3 lines menu toggleer and when toggled expands to fill whole thing
+        height: 6rem;
+        width: 6rem;
+        border-radius: 50%;
+        position: fixed;  //fixed position of toggler
+        top: 6.5rem;
+        right: 6.5rem;
+        background-image: radial-gradient($color-primary-light, $color-primary-dark ); //it's like linear gradient but in circle
+        z-index: 30;
+        transition: all 0.6s cubic-bezier(0.6, 0, 0.07, 1); //this cubic this is for custom animation effects and we can set this ourself use some sites on internet  ;
+        
+        @include respond(tab-port){
+            top: 4.5rem;
+            right: 4.5rem; 
+        }
+
+        @include respond(phone){
+            top: 3rem;
+            right: 3rem; 
+        }
+    
+    }
+    &__nav{ 
+        //this holds all nav items in center so this is main div which stays in background containing all nav items
+        height: 100vh; //has nav 100% height and width so we can style nav items in exact center
+        width: 100vw;  // i tried 100vh and it didn't work. It was working till I made a change in html and now it refuses to work so I used % until I find why
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 55;
+        opacity: 0;
+        width: 0;
+        // visibility: hidden;
+        transition: all 0.6s  cubic-bezier(0.68, -0.55, 0.265, 1.55);
+         
+    }
+    &__list{
+        //this is styled inside nav in exactly center of element ... so these elements
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        list-style: none;
+        text-align: center;
+    }
+    &__item{
+        margin: 1rem;
+    }
+    &__link{
+        &:link,&:visited{
+            font-size: 3rem;
+        font-weight: 300;
+        color: $color-white;
+        padding: 1rem 2rem;
+        text-decoration: none;
+        text-transform: uppercase;
+        background-image: linear-gradient(120deg, transparent 50%, $color-white 50%);  //this is so there's effect on hover 
+        background-size: 225%;  //we have linear gradient with transparent half visible and the other non-transparent one hidden behind background for that we need 2x background size
+            // size is 20% more becausewe have this thing rotated 120deg so some part of color is still left with 200% height
+        transition: all 0.4s;
+        display: inline-block;   //so our transform effects and padding work
+    }
+    span{
+        margin-right: 1.5rem;
+        display: inline-block;
+    }
+        &:hover,&:active{
+            background-position: 100%;   //on hover the background slides to position 100% from 0% at x so now transparent half is hidden and the other coloured half is visible
+            color: $color-primary;
+            transform: translateX(-2rem);
+        }
+    }
+    //when checkbox is clicked
+    &__checkbox:checked ~ &__background{
+        transform: scale(80);
+        
+    }
+    &__checkbox:checked ~ &__nav{
+        opacity: 1;
+        width: 100%;
+    }
+
+    //icon the 3 wide icons
+    &__icon{
+        position: relative;
+        margin-top: 3.5rem;
+        // transition: all 0.4s;
+        &,&::after,&::before{
+           width: 3rem;
+           height: 2px; 
+            background-color: $color-grey-dark-3;
+           display: inline-block;
+           transition: all 0.2 s;
+        }
+        &::after,&::before{
+            content: "";
+            position: absolute; 
+            left: 0;
+            transition: all 0.3s;
+        }
+        &::before{
+            top: -0.8rem;
+        }
+        &::after{
+            top: 0.8rem;
+        }
+    }
+    &__button:hover &__icon{
+        &::before{
+            top: -1rem;
+        }
+        &::after{
+            top: 1rem;
+        }
+    }
+    //when nav open button changes to cross
+ // we first rotate and move these elements to the center using top left 0 0 
+    &__checkbox:checked + &__button &__icon {
+        background-color: transparent;
+        &::before{
+            transform: rotate(135deg) ;
+            top: 0;
+        }  //we used 135  for more framatic effect that's all 45 works same
+        &::after{
+            transform: rotate(-135deg) ;
+            top:0;
+        }
+    }
+}

@@ -1,0 +1,81 @@
+body{
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: $default-font;
+    line-height: 1.7;
+    color: $color-grey-dark;
+
+}
+
+
+.heading-primary{
+    color: $color-white;
+   text-transform: uppercase;
+   backface-visibility: hidden;
+   padding-bottom: 6rem;
+   
+   &--main{
+       font-weight: 400;
+       letter-spacing: 3.5rem;
+       display: block;
+       font-size: 6.0rem;
+       animation-name: moveRight;
+       animation-duration: 800ms;
+       animation-timing-function: ease-out;
+       
+       @include respond(phone){
+        letter-spacing: 1rem;
+        font-size: 5rem;
+        }
+
+    }
+   &--sec{
+       font-weight: 700;
+       letter-spacing: 1.7rem;
+       display: block;
+       font-size: 2.0rem;
+       animation-name: moveLeft;
+       animation-duration: 600ms;
+       animation-timing-function: ease-out;
+       
+       @include respond(phone){
+        letter-spacing: 0.5rem;
+        }
+
+    } 
+}
+.heading-secondary{
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 3.5rem;
+    display: inline-block;
+    background-image: linear-gradient(to right, $color-primary-light, $color-primary-dark);
+    -webkit-background-clip: text; // background clip to text so the color sits inside text giving gradient color
+            background-clip: text;
+    color: transparent; //so we only see background color not text color
+    letter-spacing: 2px;
+    transition: all 0.2s;
+    @include respond(tab-port){
+        font-size: 3rem;
+    }
+    @include respond(phone){
+        font-size: 2.5rem;
+    }
+
+    &:hover{
+        transform: skewY(4deg) skewX(1deg) scale(1.1);
+        text-shadow: .5rem 1rem 2rem rgba($color-black,0.2);
+    }
+} 
+
+.heading-tertiary{
+    font-size: $default-font;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.paragraph{
+    font-size: $default-font;
+    &:not(:last-child){
+        margin-bottom: 3rem;
+    }
+}

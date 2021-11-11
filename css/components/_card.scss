@@ -1,0 +1,202 @@
+.card{
+    -moz-perspective: 150rem;  //prespective value should be high so crazy things don't happen
+    perspective: 150rem;    //this is so there is 3d like visual effe ts on hover
+    height:52rem;
+    position: relative;
+    //float and position absolute takes elements out of natural flow and elements collaspe and loose their height after this
+    &__side{
+        backface-visibility: hidden ;  // we no longer see back part//this is so back part of the card is hidden
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.8s ease; //ease is soanimation looks smoother
+        height:52rem;
+        width: 100%;
+        background-color: $color-white;
+        box-shadow: 0 1.5rem 4rem rgba($color-black,0.15);
+        overflow: hidden; // this is to get corners so image doesn't overflow
+        
+        &__back{
+            &__info{
+                color:$color-white;
+                .info{
+                    text-transform: uppercase;
+                }
+            }
+            transform: rotateY(180deg);
+            &_1{
+            background-image: linear-gradient( to right bottom,$color-tertiary-light, $color-tertiary-dark);
+            }
+            &_2{
+            background-image: linear-gradient( to right bottom,$color-primary-light, $color-primary-dark);
+            }
+            &_3{
+            background-image: linear-gradient( to right bottom,$color-secondary-light, $color-secondary-dark);
+            }
+        }
+    }
+    &:hover .card__side__front{
+        transform: rotateY(-180deg); //when card is hovered, it's side gets rotated 180deg
+        //it's purpose is to make other side visible //
+        // - because rotation needs to be smooth if we put 180  then , this rotates to front 0-180 and back rotates opposite 180-0 so transition is not smooth
+    }
+    &:hover &__side__back{
+        transform: rotateY(0deg); //when card is hovered, it's side gets rotated 180deg
+        //it's purpose is to make other side visible
+    }
+    &__picture{
+        //styling
+        clip-path: polygon(0% 0%, 0% 100%, 100% 85%, 100% 0%);
+        background-blend-mode: screen;  //this blends background-images //there are different ways of blending
+        background-size: cover;
+        height: 23rem;
+        border-top-left-radius: 3px;
+        border-top-right-radius  : 3px;
+        //this is done because clip-path breaks overflow so manual borser should be set
+
+        &__1{
+        background-image:  linear-gradient(to right bottom, rgba($color-tertiary-light,0.9),rgba($color-tertiary-dark,0.9)), url(../img/nat-5.jpg);
+        }
+        &__2{
+            background-image:  linear-gradient(to right bottom, rgba($color-primary-light,0.9),rgba($color-primary-dark,0.9)), url(../img/nat-6.jpg);
+        }
+        &__3{
+            background-image:  linear-gradient(to right bottom, rgba($color-secondary-light,0.9),rgba($color-secondary-dark,0.9)), url(../img/nat-7.jpg);
+        }
+
+    }
+
+    &__details{
+        ul li{
+            list-style: none;
+        }
+    }
+    &__heading{
+         font-size: 2.8rem;
+         text-transform: uppercase;
+         color: $color-white;
+         font-weight: 300;
+         position: absolute; //this is to align things where we need on side of image
+         text-align: right;
+         top: 12rem;
+         right:2rem;
+         width: 75%;  //this is to dexrease size of heading to make it go in 2 lines
+    }
+    &__heading_span{
+        padding: 1rem 1.5rem; //so heading goes into 2 lines
+        box-decoration-break: clone;  //this property aapplies all declerations given to a selector to all the boxes that are created by the element 
+        &_1{
+         background-image:  linear-gradient(to right bottom, rgba($color-tertiary-light,0.85),rgba($color-tertiary-dark,0.85));
+        }
+        &_2{
+            background-image:  linear-gradient(to right bottom, rgba($color-primary-light,0.85),rgba($color-primary-dark,0.85));
+           }
+        &_3{
+        background-image:  linear-gradient(to right bottom, rgba($color-secondary-light,0.85),rgba($color-secondary-dark,0.85));
+        }
+    }
+
+    &__details{
+        padding: 3rem;//space from top
+        ul{
+            list-style: none;
+            width: 80%;  //for line not completely from one edge to another 
+            margin: 0 auto; //centers block of width 80%
+             li{
+                    text-align: center;
+                    font-size: 1.5rem;
+                    padding: 1rem;
+                    &:not(:last-child){
+                        border-bottom: 1px solid #eee;
+                    }
+                    //all this for line
+    
+            }
+        }
+        
+    }
+    //styling back side
+    &__cta{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        text-align: center;
+        transform: translate(-50%,-50%);// this is for exact center of elements
+        width: 90%;  //button was in 2 lines because width of cta was small to fix that we gave  big width to cta
+    }
+    &__price{
+        &__only{
+            font-size: 1.4rem;
+            text-transform: uppercase;
+        }
+        &__box{
+            color: $color-white;
+            text-align: center;
+            margin-bottom: 8rem;
+        }
+        &__value{
+            font-size: 6rem;
+            font-weight: 100;
+        }
+
+    }
+
+
+    @media only screen and (max-width:56.25em), only screen and (hover:none){
+        //second condition so it works on touch only devices with big width too
+        height:auto;
+        position: relative;
+        border-radius: 3px;
+        background-color: $color-white;
+        box-shadow: 0 1.5rem 4rem rgba($color-black,0.15);
+
+        &__side{
+            position: relative;
+            height:auto;
+            box-shadow: none ;
+            
+            &__back{
+                clip-path: polygon(0 10%, 100% 0, 100% 100%, 100% 0) ;
+                &__info{
+                    color:$color-white;
+                    .info{
+                        text-transform: uppercase;
+                    }
+                }
+                transform: rotateY(0deg);
+            }
+    }
+    &:hover .card__side__front{
+        transform: rotateY(0deg);
+    }
+   
+
+    .card__details{
+        padding: 1rem 3rem;
+    }
+    //styling back side
+    &__cta{
+        position: relative;
+        top: 0%;
+        left: 0%;
+        transform: translate(0);// this is for exact center of elements
+        width: 100%;  //button was in 2 lines because width of cta was small to fix that we gave  big width to cta
+        padding: 7rem 4rem 4rem 4rem;
+    }
+    &__price{
+        &__box{
+            color: $color-white;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        &__value{
+            font-size: 4rem;
+        }
+
+    }
+          
+    } 
+
+}
+
+

@@ -1,0 +1,101 @@
+.form{
+    &-group:not(:last-child){
+    margin-bottom: 2rem;
+    }
+
+    &-input{
+    font-size: 1.5rem;
+    font-family: inherit;
+    color: inherit;  //fonts and related properties doesn't really inherit by default on form so set manually 
+    padding: 1.5rem 2rem;
+    border-radius: 2px;
+    background-color: rgba( $color-white, 0.5);
+    border: none;
+    transition: all 0.4s ;
+    border-bottom: 3px solid transparent; // so that things don't go down on click
+    width: 90%;
+    display: block;
+    &::-webkit-input-placeholder{ //to select placeholder color a css property
+        color: $color-grey-dark-2;
+    }
+
+    @include respond(tab-port){
+        width: 100%;
+    }
+
+    &:focus{
+        outline:none;  //there's black outline on form on click
+        box-shadow: 0 1rem 2rem rgba( $color-black, 0.15);
+        border-bottom: 3px solid $color-primary;
+        // these are effects when form's input area is clicked
+        &:invalid{
+            border-bottom: 3px solid $color-tertiary-dark;
+            //this is what happens when form's input is invalid (nothing is selected), once valied changes to upper color
+        }
+    } 
+}
+
+    &-label{
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-left: 2rem;
+    margin-top: 0.8rem;
+    display: block; //this is to be able to use block level properties in text element
+    transition: all 0.3s; 
+    }
+    &-input:placeholder-shown + &-label{   
+        //the + is sibling selector and selects element that comes exactly after the element with same parent element there's also a general sibling selector ~ and it works even if two elements are not adjacent
+        opacity: 0; //label doesn't show up in the beginning when placeholder is shown
+        visibility: hidden;
+        //opacity  is for animation effects visibility is so it is actually absent not just hidden in it's place
+        transform: translateY(-4rem); // so it looks as if coming from up to down
+    }
+    &__radio-group{
+        width: 49%;  //for somereason doing 50% puts these things in separate lines
+        display: inline-block;  //so they display side by side
+    
+        @include respond(tab-port){
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+    }
+    &__radio-label{
+        font-size: $default-font;
+        cursor: pointer;
+        padding-left: 4rem; //for button space's left
+        position: relative;
+    }
+    &__radio-button{
+            //custom radio button inside label
+        height: 3rem;
+        width: 3rem;
+        border: 5px solid $color-primary;
+        border-radius: 50%;
+        display: inline-block;  // some of these properties only  work in block elements so given
+        position: absolute;   //to porperly aligh radio buttons
+        top: -0.5rem;
+        left: 0rem;
+        &::after{  //this is for the dot inside radio button's green dot
+            content: "";
+            display: block;  //content and display must for pseudo elements
+            height: 1.2rem;
+            width: 1.2rem;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: $color-primary;
+            opacity: 0;  //at first not checked 
+            transition: 0.3s;
+        }
+
+    }
+    &__radio-input:checked +  &__radio-label &__radio-button::after{  
+        //check is pseudo selector like hover and when radio button is checked it turns on, it's sibling with class label is selected whose child button's after element is selected here
+        opacity: 1;
+    }
+    &__radio-input{
+        visibility: hidden;    //the main hover buttons are hidden so we make new, better ones
+    }
+}

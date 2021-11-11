@@ -1,0 +1,49 @@
+@mixin clearfix{ //clearfix is substitute for clear div
+    &::after{
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+
+/// Media   Queries           VarName
+/*
+0-600       Phone             phone
+600-900     Tab--Portrait     tab-port
+900-1200    Tab Landscape     tab-land
+1200-1800   Normal Styles     
+1800+       Big Desktop       big-desktop
+*/
+
+// @mixin respond-phone {
+//     @media (max-width: 600px) {@content};  
+//     //this @content is to pass variable like font-size=30px  into mixin,
+// }      there's a better way
+
+
+//////     ORDER === Base + typography > general layout > grid > page layout > components
+
+@mixin respond($breakpoint) {
+
+        //in media queries, ems and rems don't take root font size of browsers specified in html but font size peovided by browsers
+        //ems is preferred because some browsers don't support rems here
+        //1em=1 6px
+
+    @if $breakpoint == big-desktop{
+        // 1800+ 
+        @media only screen and (min-width:112.5em){ @content };
+    }
+    @if $breakpoint == phone{
+        //0- 600px
+        @media only screen and (max-width:37.5em){ @content };
+    } 
+    @if $breakpoint == tab-port{
+        // 600px -900px
+        @media only screen and (max-width:56.25em){ @content };
+    }
+    @if $breakpoint == tab-land{
+        //900 - 1200px
+        @media only screen and (max-width:75em){ @content };
+    }
+}

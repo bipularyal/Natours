@@ -1,0 +1,60 @@
+.row{ 
+    @include clearfix();
+
+    max-width: $grid-width;
+    margin: 0 auto;
+    font-size: $default-font;
+
+    @include respond(tab-port){
+        max-width:60rem;  //this is so  there are single columns in each div
+        padding: 0 2rem;
+    }
+    
+    [class^="col-"]{  
+        // [] is an attribute selector and class'^' selects all elements which starts with specified characters 
+        // putting class$ means all elements which ends with specified characters
+        &:not(:last-child){
+            margin-right: $gutter-horizontal;
+        }
+        float: left; //when we use float, the height of element collapses and becomes 0
+ 
+        @include respond(tab-port){
+            width: 100% !important;  //this is so  there are single columns in each div
+            margin-right: 0;
+            margin-bottom: $gutter-vertical-small;  //so elements are in differrent sections
+        }
+
+    }
+
+    &:not(:last-child){  
+        //this does not add properties to specified element
+        // that is the vertical margin is put in all rows except the last one
+        margin-bottom: $gutter-vertical;
+
+        @include respond(tab-port){
+            margin-bottom: $gutter-vertical-small;  //small gutter for small width
+        }
+
+    }
+    
+    .col-1-of-2{
+        width: calc((100% - #{$gutter-horizontal}) / 2); // is a css function
+                            // the scss variable is wrapped with {} for css to be abloe to use it
+        
+    }
+    .col-1-of-3{
+        width: calc((100% - (#{$gutter-horizontal} * 2)) / 3);
+    }
+    .col-2-of-3{
+        width: calc(((100% - (#{$gutter-horizontal} * 2)) / 3) * 2 + #{$gutter-horizontal} );
+    }
+    .col-1-of-4{
+        width: calc((100% - (#{$gutter-horizontal} * 3)) / 4);
+    }
+    .col-2-of-4{
+        width: calc(((100% - (#{$gutter-horizontal} * 3)) / 4) * 2 + #{$gutter-horizontal} );
+    }
+    .col-3-of-4{
+        width: calc(((100% - (#{$gutter-horizontal} * 3)) / 4) * 3 + 2 * #{$gutter-horizontal} );
+    }
+}

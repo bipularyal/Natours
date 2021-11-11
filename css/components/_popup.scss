@@ -1,0 +1,125 @@
+.popup{
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba($color-black, 0.8);
+    opacity: 0;   //not available first
+    visibility: hidden;
+    z-index: 69;
+    transition: all .3s;
+
+   @supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)){
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba($color-black, 0.3);
+   }  //if the secified property is supported by browsers these things happen  ... used for browser support
+
+    &__content{
+        overflow: hidden;
+        width: 75%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.3); 
+        opacity: 0;   //this is for animation also scale
+        background-color: $color-white;
+        border-radius: 3px;
+        transition: all 0.4s 0.2s;  //the 3ed peoperty is transition delay
+        display: table;  //this is to get 2 elements on same line and get them same height
+
+        @include respond(tab-land){
+            width: 85%;
+        }
+        @include respond(tab-port){
+            width: 98%;
+        }
+        @include respond(phone){
+            display: block;
+        }
+    }
+    &__left{
+        width: 33.333333%;  //one third width
+        display: table-cell; //this is to get 2 elements on same line and get them same height
+        @include respond(tab-port){
+            width: 36%;
+        }
+        @include respond(phone){
+            width: 85%;
+            display: block;
+            margin: auto;
+        }
+    
+    }
+    &__right{
+        width: 66.66666%;
+        display: table-cell;  //this is to get 2 elements on same line and get them same height
+        vertical-align: middle;  //aligns items to middle .... can work with table 
+        padding: 3rem 5rem;
+        @include respond(tab-port){
+            padding: 3rem 1rem;
+            width: 64%;
+        }
+        @include respond(phone){
+            width: 98%;
+            display: block;
+            margin: auto;
+            padding-top: 1rem;
+        }
+    }
+    &__img{
+        display: block;
+        width: 100%;
+        @include respond(phone){
+            display: inline-block;
+            width: 49%;
+        }
+    }
+    &__text{
+        font-size: 1.4rem;
+        margin-bottom: 4rem;
+
+        column-count: 2;   //this is to separate text into dofferent columns
+        column-gap: 4rem;
+        column-rule:  1px solid $color-grey-light-2;   //line between columns
+        -webkit-hyphens:auto;
+        hyphens: auto;  //so there are hyphens if text is incomplete in line insted of putting it in next line
+        //for this setting language of html in html tag is necessary
+        @include respond(tab-port){
+            margin-bottom: 1.5rem;
+            column-count: 1;
+        }
+    }
+
+    
+    &:target{   
+        //when id is clicked,,, the  popup becomes target ... where the href points to and it's a pseudo element. .. it's activated when url changes
+        visibility: visible;
+        opacity: 1;
+    }
+
+    &:target &__content{
+        //animation on content after popup
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    &__close{   //to close the popup
+        padding: 2rem;
+        &:link,&:visited{
+            color: $color-grey-dark;
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 3rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s;
+            line-height: 1;
+        }
+        &:hover{
+            color:$color-primary;
+        }
+    }
+}
